@@ -4,6 +4,7 @@ import {View, Images, Text, StyleSheet,Alert,Dimensions,TouchableOpacity,ScrollV
 import Icon from '../common/icons';
 import Button from '../components/Button';
 import AuthBackground from '../components/AuthBackground';
+import { sha256 } from 'react-native-sha256';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,6 +19,12 @@ export default class LoginScreen extends Component {
     }
   }
 
+  componentDidMount() {
+    sha256("123456").then( hash => {
+        this.setState({validpassword: hash});
+    })
+  }
+
   onPress() {
     // dismiss the keyboard ..
     Keyboard.dismiss();
@@ -29,11 +36,14 @@ export default class LoginScreen extends Component {
         if(!EMAIL_REGEX.test(email)) {
           Alert.alert('Information', "Enter valid email address");
         } else {
-          if(email == validemail && password == validpassword) {
-            this.props.navigation.navigate("Home");
-          }else {
-                Alert.alert('Information', "Invalid email or password");
-          }
+          sha256(password).then( hash => {
+            if(email == validemail && hash == validpassword) {
+              this.props.navigation.navigate("Home");
+            }else {
+                  Alert.alert('Information', "Invalid email or password");
+            }
+          })
+
         }
     } else {
           Alert.alert('Information', "All fields are mandatory");

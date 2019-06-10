@@ -3,6 +3,7 @@ package com.ecommerce;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.sha256lib.Sha256Package;
 import com.horcrux.svg.SvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new Sha256Package(),
             new SvgPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),
